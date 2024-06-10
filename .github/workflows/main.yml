@@ -7,10 +7,6 @@ on:
       - main
   workflow_dispatch:
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   run:
     name: Cloudflare Gateway
@@ -27,7 +23,7 @@ jobs:
         uses: actions/checkout@main
         with:
           repository: "luxysiv/Cloudflare-Gateway-Pihole"
-          ref: "v1"
+          fetch-depth: 0
           
       - name: Install Python
         uses: actions/setup-python@main
