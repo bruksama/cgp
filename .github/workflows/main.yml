@@ -1,7 +1,5 @@
 name: Add Rules to Cloudflare Gateway
 on:
-  schedule:
-    - cron: "0 7,19 * * *"
   push:
     branches:
       - main
@@ -35,13 +33,12 @@ jobs:
           
       - name: Cloudflare Gateway Zero Trust 
         run: python -m src
+
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          retain_days: 0
+          keep_minimum_runs: 1
         
-  keepalive:
-    runs-on: ubuntu-latest
-    permissions:
-      actions: write
-      contents: read
-    steps:
-      - uses: actions/checkout@main
-      - uses: gautamkrishnar/keepalive-workflow@v2
-          
